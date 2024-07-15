@@ -19,7 +19,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
+        "montserrat": ["Montserrat", "sans-serif"],
         "alex-brush": ["Alex Brush", "cursive"],
       },
       fontSize: {

@@ -31,12 +31,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
   setProfileOpen,
   setAccountOpen,
 }) => {
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const contactRef = useRef<HTMLDivElement | null>(null);
-  const nameInputRef = useRef<HTMLInputElement | null>(null);
-  const phoneInputRef = useRef<HTMLInputElement | null>(null);
-  const emailInputRef = useRef<HTMLInputElement | null>(null);
-  const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const messageInputRef = useRef<HTMLTextAreaElement>(null);
 
   const [formValues, setFormValues] = useState<FormValues>({
     name: "",
@@ -188,16 +188,17 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   return (
     <div>
-      <span
-        className="cursor-pointer font-montserrat text-16 font-thin rounded-full p-1 pl-4 pr-4 text-white bg-[#483d78]"
+      <button
+        type="button"
+        className="cursor-pointer font-montserrat  text-16 font-thin rounded-full p-1 pl-4 pr-4 text-white bg-[#483d78]"
         onClick={toggleContactForm}
       >
         Contact
-      </span>
+      </button>
       {isContactFormVisible && (
         <div
           ref={contactRef}
-          className="fixed inset-0 flex justify-end items-start md:pt-1 2xl:pt-16 mr-6"
+          className="fixed top-14 inset-0 flex justify-end items-start md:pt-1 2xl:pt-16 mr-6"
         >
           <form
             ref={formRef}
@@ -286,34 +287,31 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   name="message"
                   placeholder=" "
                   required
-                  className="w-full text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:border-black h-32 resize-none bg-white"
-                  style={{
-                    fontSize: "18px",
-                    lineHeight: "1.5",
-                    letterSpacing: "0.5px",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                    transition: "box-shadow 0.3s ease, border-color 0.3s ease",
-                  }}
+                  className={`w-full p-3 border ${
+                    errors.message ? "border-red-500" : "border-gray-300"
+                  } rounded-lg focus:outline-none`}
                   onFocus={handleFocus}
-                  onBlur={handleBlur}
+                  onBlur={handleValidation}
                   onChange={handleChange}
                   value={formValues.message}
-                  onKeyDown={(event) => handleKeyDown(event, nameInputRef)}
-                ></textarea>
+                />
                 <label className="absolute left-3 top-3 text-gray-500 pointer-events-none transition-all duration-200 ease-in-out bg-white px-1">
                   Message
                 </label>
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                )}
               </div>
-              <button
-                type="submit"
-                className={`w-1/3 bg-[#483d78] text-white py-2 rounded ${
-                  isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={isSubmitDisabled}
-              >
-                Submit
-              </button>
             </div>
+            <button
+              type="submit"
+              className={`w-full mt-6 bg-[#483d78] text-white rounded-lg p-3 font-montserrat text-lg focus:outline-none ${
+                isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isSubmitDisabled}
+            >
+              Submit
+            </button>
           </form>
         </div>
       )}

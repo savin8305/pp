@@ -103,7 +103,13 @@ const Navbar: React.FC = memo(() => {
             setProfileOpen={setProfileOpen}
             setAccountOpen={setAccountOpen}
           />
-          <SearchBarLayout />
+          <SearchBarLayout
+              setIsFlagOpen={setIsFlagOpen}
+              openSearch={openSearch}
+              setOpenSearch={setOpenSearch}
+              setProfileOpen={setProfileOpen}
+              setAccountOpen={setAccountOpen}
+          />
           <ProfileLayout
             profileOpen={profileOpen}
             setIsFlagOpen={setIsFlagOpen}

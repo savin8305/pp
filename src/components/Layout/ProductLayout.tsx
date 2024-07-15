@@ -24,9 +24,9 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredMachines = Machines.filter(machine =>
+  const filteredMachines = Machines.filter((machine) =>
     machine.category.includes(hoveredCategory)
-  ).map(machine => ({
+  ).map((machine) => ({
     ...machine,
     image: (images as unknown as Images)[machine.image],
   }));
@@ -52,20 +52,23 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
     );
   };
 
-  const handleMouseLeave = useCallback((e: MouseEvent) => {
-    const container = containerRef.current;
-    if (container) {
-      const rect = container.getBoundingClientRect();
-      if (e.clientY >= rect.bottom) {
-        setHoveredCategory("All Products");
-        setCurrentIndex(0);
-        setActiveCategory(null);
-        setHoveredItem(null);
-        setHeading(null);
-        setIsVisible(true);
+  const handleMouseLeave = useCallback(
+    (e: MouseEvent) => {
+      const container = containerRef.current;
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        if (e.clientY >= rect.bottom) {
+          setHoveredCategory("All Products");
+          setCurrentIndex(0);
+          setActiveCategory(null);
+          setHoveredItem(null);
+          setHeading(null);
+          setIsVisible(true);
+        }
       }
-    }
-  }, [setHoveredItem, setHeading, setIsVisible]); // Add dependencies if they are used inside
+    },
+    [setHoveredItem, setHeading, setIsVisible]
+  );
 
   useEffect(() => {
     const containerElement = containerRef.current;
@@ -77,7 +80,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
         containerElement.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, [handleMouseLeave]); // Include handleMouseLeave here
+  }, [handleMouseLeave]);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -99,84 +102,107 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
           }}
           className="flex h-full justify-center items-center w-full md:w-3/4 relative px-4"
         >
-          {filteredMachines.length > 3 && (
-            <button
-              onClick={handlePrev}
-              className="absolute left-0 z-10 p-0 text-4xl ml-0 h-10 w-10 border-2 rounded-full overflow-hidden bg-white text-black transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:w-0 before:bg-black before:transition-all before:duration-75 hover:text-white hover:before:left-0 hover:before:w-full"
-            >
-              <span className="relative z-10">
-                <MdKeyboardArrowLeft />
-              </span>
-            </button>
-          )}
-          <div className="flex overflow-hidden w-full justify-center">
-            {filteredMachines.length <= 3
-              ? filteredMachines.map((machine, index) => (
-                  <div
-                    key={`${machine.name}-${index}`}
-                    className="text-center relative w-1/3"
-                  >
-                    <Image
-                      src={machine.image}
-                      alt={machine.name}
-                      className="object-contain rounded-lg relative z-10 h-[200px] w-full"
-                      width={400}
-                      height={200}
-                    />
-                    <h3 className="text-lg text-black font-bold mt-2 relative z-20">
-                      {machine.name}
-                    </h3>
-                    <div className="flex justify-center space-x-4 mt-2">
-                      <a
-                        href={`${machine.name}`}
-                        className="primary-button relative z-20"
+          {hoveredCategory !== "All Products" && (
+            <>
+              {filteredMachines.length > 3 && (
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-0 z-10 p-0 text-4xl ml-0 h-10 w-10 border-2 rounded-full overflow-hidden bg-white text-black transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:w-0 before:bg-black before:transition-all before:duration-75 hover:text-white hover:before:left-0 hover:before:w-full"
+                >
+                  <span className="relative z-10">
+                    <MdKeyboardArrowLeft />
+                  </span>
+                </button>
+              )}
+              <div className="flex overflow-hidden w-full justify-center">
+                {filteredMachines.length <= 3
+                  ? filteredMachines.map((machine, index) => (
+                      <div
+                        key={`${machine.name}-${index}`}
+                        className="text-center relative w-1/3"
                       >
-                        Book Now
-                      </a>
-                    </div>
-                  </div>
-                ))
-              : [...filteredMachines, ...filteredMachines]
-                  .slice(currentIndex, currentIndex + 3)
-                  .map((machine, index) => (
-                    <div
-                      key={`${machine.name}-${index}`}
-                      className="pt-0 text-center w-1/3 relative"
-                    >
-                      <Image
-                        src={machine.image}
-                        alt={machine.name}
-                        className={`object-scale-down relative z-10 transition-transform duration-700 ${
-                          index === 1
-                            ? "zoomed-image w-[400px] h-[200px] p-2"
-                            : "h-[200px] w-full p-6"
-                        }`}
-                        width={400}
-                        height={200}
-                      />
-                      <h1 className="text-lg text-black font-bold pt-0 relative z-20">
-                        {machine.name}
-                      </h1>
-                      <div className="flex justify-center pt-4 space-x-4 mt-2">
-                        <a
-                          href={`${machine.name}`}
-                          className="primary-button relative z-20"
-                        >
-                          Book Now
-                        </a>
+                        <Image
+                          src={machine.image}
+                          alt={machine.name}
+                          className="object-contain rounded-lg relative z-10 h-[200px] w-full"
+                          width={400}
+                          height={200}
+                        />
+                        <h3 className="text-lg text-black font-bold mt-2 relative z-20">
+                          {machine.name}
+                        </h3>
+                        <div className="flex justify-center space-x-4 mt-2">
+                          <a
+                            href={`${machine.name}`}
+                            className="primary-button relative z-20"
+                          >
+                            Book Now
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-          </div>
-          {filteredMachines.length > 3 && (
-            <button
-              onClick={handleNext}
-              className="absolute border-2 rounded-full right-0 z-10 h-10 w-10 animated-button-right"
-            >
-              <span className="relative z-10">
-                <MdKeyboardArrowRight />
-              </span>
-            </button>
+                    ))
+                  : [...filteredMachines, ...filteredMachines]
+                      .slice(currentIndex, currentIndex + 3)
+                      .map((machine, index) => (
+                        <div
+                          key={`${machine.name}-${index}`}
+                          className="pt-0 text-center w-1/3 relative"
+                        >
+                          <Image
+                            src={machine.image}
+                            alt={machine.name}
+                            className={`object-scale-down relative z-10 transition-transform duration-700 ${
+                              index === 1
+                                ? "zoomed-image w-[400px] h-[200px] p-2"
+                                : "h-[200px] w-full p-6"
+                            }`}
+                            width={400}
+                            height={200}
+                          />
+                          <h1 className="text-lg text-black font-bold pt-0 relative z-20">
+                            {machine.name}
+                          </h1>
+                          <div className="flex justify-center pt-4 space-x-4 mt-2">
+                            <a
+                              href={`${machine.name}`}
+                              className="primary-button relative z-20"
+                            >
+                              Book Now
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+              </div>
+              {filteredMachines.length > 3 && (
+                <button
+                  onClick={handleNext}
+                  className="absolute border-2 rounded-full right-0 z-10 h-10 w-10 animated-button-right"
+                >
+                  <span className="relative z-10">
+                    <MdKeyboardArrowRight />
+                  </span>
+                </button>
+              )}
+            </>
+          )}
+          {hoveredCategory === "All Products" && (
+            <div className="w-full grid grid-cols-5 gap-1">
+              {filteredMachines.slice(0, 15).map((machine, index) => (
+                <div key={index} className="text-center">
+                  <Image
+                    src={machine.image}
+                    alt={machine.name}
+                    className="object-contain rounded-lg h-[200px] w-full"
+                    width={400}
+                    height={200}
+                  />
+                  <h3 className="text-lg text-black font-bold ">
+                    {machine.name}
+                  </h3>
+                 
+                </div>
+              ))}
+            </div>
           )}
         </div>
         <div className="w-full md:w-1/4 pl-6 lg:space-y-3 border-l border-gray-300">
