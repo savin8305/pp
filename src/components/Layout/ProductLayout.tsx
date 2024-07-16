@@ -19,13 +19,13 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
   setHeading,
   setIsVisible,
 }) => {
-  const [hoveredCategory, setHoveredCategory] = useState("All Products");
+  const [hoveredCategory, setHoveredCategory] = useState<string>(SidebarLinks[0].name);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const filteredMachines = Machines.filter((machine) =>
-    machine.category.includes(hoveredCategory)
+    hoveredCategory ? machine.category.includes(hoveredCategory) : false
   ).map((machine) => ({
     ...machine,
     image: (images as unknown as Images)[machine.image],
@@ -33,22 +33,11 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredMachines.length);
-    setActiveCategory(
-      filteredMachines[
-        (currentIndex + 1) % filteredMachines.length
-      ].category.split(",")[0]
-    );
   };
 
   const handlePrev = () => {
     setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + filteredMachines.length) % filteredMachines.length
-    );
-    setActiveCategory(
-      filteredMachines[
-        (currentIndex - 1 + filteredMachines.length) % filteredMachines.length
-      ].category.split(",")[0]
+      (prevIndex) => (prevIndex - 1 + filteredMachines.length) % filteredMachines.length
     );
   };
 
@@ -58,9 +47,8 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
       if (container) {
         const rect = container.getBoundingClientRect();
         if (e.clientY >= rect.bottom) {
-          setHoveredCategory("All Products");
+          setHoveredCategory("");
           setCurrentIndex(0);
-          setActiveCategory(null);
           setHoveredItem(null);
           setHeading(null);
           setIsVisible(true);
@@ -84,128 +72,119 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
 
   useEffect(() => {
     setCurrentIndex(0);
-    setActiveCategory(null);
   }, [hoveredCategory]);
 
   return (
     <div
       ref={containerRef}
-      className="w-full z-30 md:h-full bg-white p-4 border-b-2 rounded-xl flex flex-col justify-center items-center font-medium"
+      className="w-full z-30 md:h-full bg-white p-2 border-b-2 rounded-xl flex flex-col justify-center items-center font-medium"
     >
       <div className="w-full flex flex-col md:flex-row rounded-lg overflow-hidden">
-        <div
-          style={{
-            backgroundImage: `url(${me.src})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-          className="flex h-full justify-center items-center w-full md:w-3/4 relative px-4"
-        >
-          {hoveredCategory !== "All Products" && (
-            <>
-              {filteredMachines.length > 3 && (
-                <button
-                  onClick={handlePrev}
-                  className="absolute left-0 z-10 p-0 text-4xl ml-0 h-10 w-10 border-2 rounded-full overflow-hidden bg-white text-black transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:w-0 before:bg-black before:transition-all before:duration-75 hover:text-white hover:before:left-0 hover:before:w-full"
-                >
-                  <span className="relative z-10">
-                    <MdKeyboardArrowLeft />
-                  </span>
-                </button>
-              )}
-              <div className="flex overflow-hidden w-full justify-center">
-                {filteredMachines.length <= 3
-                  ? filteredMachines.map((machine, index) => (
-                      <div
-                        key={`${machine.name}-${index}`}
-                        className="text-center relative w-1/3"
-                      >
-                        <Image
-                          src={machine.image}
-                          alt={machine.name}
-                          className="object-contain rounded-lg relative z-10 h-[200px] w-full"
-                          width={400}
-                          height={200}
-                        />
-                        <h3 className="text-lg text-black font-bold mt-2 relative z-20">
-                          {machine.name}
-                        </h3>
-                        <div className="flex justify-center space-x-4 mt-2">
-                          <a
-                            href={`${machine.name}`}
-                            className="primary-button relative z-20"
-                          >
-                            Book Now
-                          </a>
-                        </div>
-                      </div>
-                    ))
-                  : [...filteredMachines, ...filteredMachines]
-                      .slice(currentIndex, currentIndex + 3)
-                      .map((machine, index) => (
-                        <div
-                          key={`${machine.name}-${index}`}
-                          className="pt-0 text-center w-1/3 relative"
-                        >
-                          <Image
-                            src={machine.image}
-                            alt={machine.name}
-                            className={`object-scale-down relative z-10 transition-transform duration-700 ${
-                              index === 1
-                                ? "zoomed-image w-[400px] h-[200px] p-2"
-                                : "h-[200px] w-full p-6"
-                            }`}
-                            width={400}
-                            height={200}
-                          />
-                          <h1 className="text-lg text-black font-bold pt-0 relative z-20">
-                            {machine.name}
-                          </h1>
-                          <div className="flex justify-center pt-4 space-x-4 mt-2">
-                            <a
-                              href={`${machine.name}`}
-                              className="primary-button relative z-20"
-                            >
-                              Book Now
-                            </a>
-                          </div>
-                        </div>
-                      ))}
-              </div>
-              {filteredMachines.length > 3 && (
-                <button
-                  onClick={handleNext}
-                  className="absolute border-2 rounded-full right-0 z-10 h-10 w-10 animated-button-right"
-                >
-                  <span className="relative z-10">
-                    <MdKeyboardArrowRight />
-                  </span>
-                </button>
-              )}
-            </>
+        <div className="flex h-full justify-center items-center w-full md:w-3/4 relative">
+          <Image
+            src={me}
+            alt="Background"
+            layout="fill"
+            objectFit="cover"
+            className="w-full h-full"
+          />
+          {filteredMachines.length > 6 && (
+            <button
+              onClick={handlePrev}
+              className="absolute left-0 z-10 p-0 text-4xl border-2 rounded-full overflow-hidden bg-white text-black transition-all hover:text-white hover:bg-black"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
+              <MdKeyboardArrowLeft />
+            </button>
           )}
-          {hoveredCategory === "All Products" && (
-            <div className="w-full grid grid-cols-5 gap-1">
-              {filteredMachines.slice(0, 15).map((machine, index) => (
-                <div key={index} className="text-center">
-                  <Image
-                    src={machine.image}
-                    alt={machine.name}
-                    className="object-contain rounded-lg h-[200px] w-full"
-                    width={400}
-                    height={200}
-                  />
-                  <h3 className="text-lg text-black font-bold ">
-                    {machine.name}
-                  </h3>
-                 
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-wrap justify-center overflow-hidden w-full">
+            {filteredMachines.length <= 6
+              ? filteredMachines.map((machine, index) => (
+                  <div
+                    key={`${machine.name}-${index}`}
+                    className="text-center relative w-1/3 p-1"
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                      animationDuration: "1s",
+                      animationFillMode: "both",
+                      animationTimingFunction: "ease-in-out",
+                      animationName: "fadeIn",
+                    }}
+                    onMouseEnter={() => setHoveredImageIndex(index)}
+                    onMouseLeave={() => setHoveredImageIndex(null)}
+                  >
+                    <Image
+                      src={machine.image}
+                      alt={machine.name}
+                      className={`object-contain rounded-lg relative z-10 h-36 w-full transition-transform duration-300 ${
+                        hoveredImageIndex === index ? "transform scale-110" : ""
+                      }`}
+                      width={200}
+                      height={150}
+                    />
+                    <h3 className="text-lg text-black font-bold relative z-20">
+                      {machine.name}
+                    </h3>
+                    <div className="flex justify-center space-x-2">
+                      <a
+                        href={`${machine.name}`}
+                        className="primary-button relative z-20"
+                      >
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
+                ))
+              : filteredMachines
+                  .slice(currentIndex, currentIndex + 6)
+                  .map((machine, index) => (
+                    <div
+                      key={`${machine.name}-${index}`}
+                      className="text-center relative w-1/3 p-2"
+                      style={{
+                        animationDelay: `${index * 0.1}s`,
+                        animationDuration: "1s",
+                        animationFillMode: "both",
+                        animationTimingFunction: "ease-in-out",
+                        animationName: "fadeIn",
+                      }}
+                      onMouseEnter={() => setHoveredImageIndex(index)}
+                      onMouseLeave={() => setHoveredImageIndex(null)}
+                    >
+                      <Image
+                        src={machine.image}
+                        alt={machine.name}
+                        className={`object-scale-down relative z-10 transition-transform duration-300 ${
+                          hoveredImageIndex === index ? "transform scale-110" : ""
+                        } h-auto w-full`}
+                        width={200}
+                        height={150}
+                      />
+                      <h1 className="text-lg text-black font-bold pt-0 relative z-20">
+                        {machine.name}
+                      </h1>
+                      <div className="flex justify-center pt-4 space-x-4 mt-2">
+                        <a
+                          href={`${machine.name}`}
+                          className="primary-button relative z-20"
+                        >
+                          Book Now
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+          </div>
+          {filteredMachines.length > 6 && (
+            <button
+              onClick={handleNext}
+              className="absolute border-2 rounded-full right-0 z-10 h-10 w-10 animated-button-right"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
+              <MdKeyboardArrowRight />
+            </button>
           )}
         </div>
-        <div className="w-full md:w-1/4 pl-6 lg:space-y-3 border-l border-gray-300">
+        <div className="w-full md:w-1/4 pl-4 space-y-2 border-l border-gray-300">
           {SidebarLinks.map((link) => (
             <div
               key={link.name}
@@ -213,17 +192,15 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
                 setHoveredCategory(link.name);
                 setCurrentIndex(0);
               }}
-              className={`flex items-center space-x-6 text-lg transition-colors duration-300 cursor-pointer ${
-                hoveredCategory === "All Products" &&
-                activeCategory === link.name
-                  ? "font-montserrat font-bold text-16 text-[#483d73]"
-                  : "font-montserrat text-14 text-[#483d73]"
+              className={`flex items-center space-x-4 text-lg transition-colors duration-300 cursor-pointer ${
+                hoveredCategory === link.name
+                  ? "font-montserrat font-bold text-[#483d73]"
+                  : "font-montserrat text-[#483d73]"
               }`}
             >
               <div
                 className={`flex items-center bg-fixed object-contain bg-no-repeat h-6 w-6 justify-center cursor-pointer ${
-                  hoveredCategory === "All Products" &&
-                  activeCategory === link.name
+                  hoveredCategory === link.name
                     ? "h-8 w-8 text-[#483d73] font-bold"
                     : "text-black"
                 }`}
@@ -238,9 +215,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
               </div>
               <span
                 className={`transition duration-300 ${
-                  hoveredCategory === link.name
-                    ? "font-semibold font-montserrat text-16"
-                    : ""
+                  hoveredCategory === link.name ? "font-semibold" : ""
                 }`}
               >
                 {link.name}
@@ -249,37 +224,19 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
           ))}
         </div>
       </div>
-      <div className="flex justify-center w-full">
-        <div
-          className={`flex justify-center items-center ${
-            hoveredCategory === "All Products" ? "space-x-0" : "space-x-2"
-          }`}
-          style={{ width: "75%", marginLeft: "-15rem" }}
-        >
-          {filteredMachines.map((machine, index) => (
-            <div
-              key={index}
-              className={`flex items-center ${
-                index === (currentIndex + 1) % filteredMachines.length
-                  ? hoveredCategory !== "All Products"
+      {hoveredCategory && filteredMachines.length > 0 && (
+        <div className="flex justify-center w-full mt-4">
+          <div className="flex justify-center items-center space-x-2">
+            {filteredMachines.map((machine, index) => (
+              <div
+                key={index}
+                className={`flex items-center cursor-pointer transition-transform duration-300 ${
+                  index === (currentIndex + 1) % filteredMachines.length
                     ? "h-8 w-8"
-                    : "h-3 w-3 bg-black rounded-full"
-                  : "h-4 w-4"
-              } bg-fixed bg-no-repeat justify-center cursor-pointer ${
-                hoveredCategory === "All Products" ? "text-black" : ""
-              }`}
-              onClick={() => {
-                setCurrentIndex(
-                  index !== 0 ? index - 1 : filteredMachines.length - 1
-                );
-                setActiveCategory(
-                  filteredMachines[index].category.split(",")[0].trim()
-                );
-              }}
-            >
-              {hoveredCategory === "All Products" ? (
-                <div className="h-2 w-2 bg-black rounded-full"></div>
-              ) : (
+                    : "h-4 w-4"
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              >
                 <Image
                   className="rounded-full bg-transparent"
                   src={machine.icon}
@@ -287,11 +244,11 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
                   width={24}
                   height={24}
                 />
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -222,28 +222,20 @@ paperStrawMachine:paperStrawMachine,
   
   export const SidebarLinks = [
     {
-      name: "All Products",
-      link: "/all",
-      icon: allproduct,
-    },
-    {
       name: "Paper Cup Machine",
       link: "/Paper Cup Machine",
       icon: papercup,
     },
-  
     {
       name: "Paper Bowl Machine",
-      link: "/used-Machine",
+      link: "/Paper Bowl Machine",
       icon: paperbowl,
     },
-  
     {
       name: "Paper Plate Machine",
-      link: "/demo-drive",
+      link: "/Paper Plate Machine",
       icon: paperplate2,
     },
-  
     {
       name: "Paper Flexo Machine",
       link: "/Paper Flexo Machine",
@@ -256,15 +248,96 @@ paperStrawMachine:paperStrawMachine,
     },
     {
       name: "Paper Straw Machine",
-      link: "/help-me-charge",
+      link: "/Paper Straw Machine",
       icon: paperstraw,
     },
     {
       name: "Paper Lunch Box Machine",
-      link: "/help-me-charge",
-      icon: paperstraw,
+      link: "/Lunch Box Machine",
+      icon: paperbag1,
     },
+    {
+      name: "Paper Cutting Machine",
+      link: "/Paper Cutting Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Slitting Machine",
+      link: "/Slitting Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Coating Machine",
+      link: "/Coating Machine",
+      icon:paperbag1,
+    },
+    {
+      name: "Corrugation Machine",
+      link: "/Corrugation Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Paper Handle Cup Machine",
+      link: "/Paper Handle Cup Machine",
+      icon: paperbag1,
+    },
+    // {
+    //   name: "Die Cutting Machine",
+    //   link: "/Die Cutting Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Insulated Cup Machine",
+    //   link: "/Insulated Cup Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Sleeve Making Machine",
+    //   link: "/Sleeve Making Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Paper Cutlery Machine",
+    //   link: "/Paper Cutlery Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Plastic Lid Machine",
+    //   link: "/Plastic Lid Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Paper Bucket Machine",
+    //   link: "/Paper Bucket Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Paper Lid Machine",
+    //   link: "/Paper Lid Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Octagonal Paper Box Forming Machine",
+    //   link: "/Octagonal Paper Box Forming Machine",
+    //   icon:paperbag1,
+    // },
+    // {
+    //   name: "Rectangular Flat Bottom Bowl Machine",
+    //   link: "/Rectangular Flat Bottom Bowl Machine",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Rectangular Flat Bottom Bowl Machine (Two Compartment)",
+    //   link: "/Rectangular Flat Bottom Bowl Machine (Two Compartment)",
+    //   icon: paperbag1,
+    // },
+    // {
+    //   name: "Carton Erecting Machine",
+    //   link: "/Carton Erecting Machine",
+    //   icon: paperbag1,
+    // },
   ];
+
   // support itemm
   export const supporItem = [
     { title: "Book a Service", image: BookServiceImage },

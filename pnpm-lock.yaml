@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/alex-brush':
-        specifier: ^5.0.20
-        version: 5.0.20
       '@fontsource/montserrat':
         specifier: ^5.0.18
         version: 5.0.18
@@ -102,9 +99,6 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  '@fontsource/alex-brush@5.0.20':
-    resolution: {integrity: sha512-ba6cfn8RAMuurnt7rz4DvpIoUQ0D3Rqe1hbk6y2s4fsgB4H0dDH+d0P0LCzf9UXUC9cu7P9Uxv14Vk09B84FoQ==}
 
   '@fontsource/montserrat@5.0.18':
     resolution: {integrity: sha512-85JBs2rCdFK/VBdSb401e2lXk5gynVo2zi3Rh2Guem4WNtT2q52+V90o3KzjmajY3TPJvCZA/kI7R05ev7148g==}
@@ -1761,8 +1755,6 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
-
-  '@fontsource/alex-brush@5.0.20': {}
 
   '@fontsource/montserrat@5.0.18': {}
 

@@ -1,5 +1,9 @@
 import React, { useRef, useEffect } from "react";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdPlayCircleOutline } from "react-icons/md";
+import {
+  MdKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+  MdPlayCircleOutline,
+} from "react-icons/md";
 import { BgMapImage } from "../../../public/assets";
 import { gsap } from "gsap";
 import Image, { StaticImageData } from "next/image";
@@ -11,42 +15,46 @@ interface SupportItem {
 }
 
 interface SupportLayoutProps {
-  hoveredItem: string | null;
-  setHoveredItem: (item: string | null) => void;
-  heading: string | null;
-  setHeading: (heading: string | null) => void;
-  isVisible: boolean;
-  setIsVisible: (visible: boolean) => void;
+  setHoveredItem: (item: any) => void;
   supporItem: SupportItem[];
   type: string;
 }
 
-
-const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporItem, type }) => {
+const SupportLayout: React.FC<SupportLayoutProps> = ({
+  setHoveredItem,
+  supporItem,
+  type,
+}) => {
   const carouselRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const firstCardWidth = useRef<number>(0);
   const cardCount = supporItem.length;
 
-  const backgroundImageStyle = type !== "Resources" ? { backgroundImage: `url(${BgMapImage.src})` } : {};
+  const backgroundImageStyle =
+    type !== "Resources" ? { backgroundImage: `url(${BgMapImage})` } : {};
 
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
     const initializeCarousel = () => {
-      firstCardWidth.current = (carousel.querySelector(".card") as HTMLElement)?.offsetWidth || 0;
+      firstCardWidth.current =
+        (carousel.querySelector(".card") as HTMLElement)?.offsetWidth || 0;
       const carouselChildren = Array.from(carousel.children);
-
-      // Remove existing clones before adding new ones
-      carousel.innerHTML = '';
-
-      // Add clones for infinite scrolling
-      carouselChildren.slice(-cardCount).reverse().forEach((card) => {
-        carousel.insertAdjacentHTML("afterbegin", (card as HTMLElement).outerHTML);
-      });
+      carouselChildren
+        .slice(-cardCount)
+        .reverse()
+        .forEach((card) => {
+          carousel.insertAdjacentHTML(
+            "afterbegin",
+            (card as HTMLElement).outerHTML
+          );
+        });
       carouselChildren.slice(0, cardCount).forEach((card) => {
-        carousel.insertAdjacentHTML("beforeend", (card as HTMLElement).outerHTML);
+        carousel.insertAdjacentHTML(
+          "beforeend",
+          (card as HTMLElement).outerHTML
+        );
       });
 
       carousel.classList.add("no-transition");
@@ -62,7 +70,10 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporIte
         carousel.classList.add("no-transition");
         carousel.scrollLeft = firstCardWidth.current * cardCount;
         carousel.classList.remove("no-transition");
-      } else if (Math.ceil(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
+      } else if (
+        Math.ceil(carousel.scrollLeft) ===
+        carousel.scrollWidth - carousel.offsetWidth
+      ) {
         carousel.classList.add("no-transition");
         carousel.scrollLeft = firstCardWidth.current * cardCount;
         carousel.classList.remove("no-transition");
@@ -80,7 +91,8 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporIte
   const handleArrowClick = (direction: "left" | "right") => {
     const carousel = carouselRef.current;
     if (!carousel) return;
-    const scrollAmount = direction === "left" ? -firstCardWidth.current : firstCardWidth.current;
+    const scrollAmount =
+      direction === "left" ? -firstCardWidth.current : firstCardWidth.current;
     carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
@@ -100,8 +112,8 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporIte
     }
   };
 
-  const IMAGE_WIDTH = 300; // Replace with your image width
-  const IMAGE_HEIGHT = 200; // Replace with your image height
+  const IMAGE_WIDTH = 300;
+  const IMAGE_HEIGHT = 200;
 
   useEffect(() => {
     const containerElement = containerRef.current;
@@ -114,6 +126,19 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporIte
       }
     };
   }, []);
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
 
   return (
     <div
@@ -129,15 +154,55 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({ setHoveredItem, supporIte
         </span>
       </button>
       <ul className="carousel" ref={carouselRef}>
-        {supporItem.concat(supporItem).map((card, index) => (
-          <li className="ml-4 flex flex-col items-center justify-center" key={`card-${index}`}>
-            <div style={backgroundImageStyle} className="card relative">
+        {supporItem.map((card, index) => (
+          <li
+            className="ml-4 flex flex-col items-center justify-center"
+            key={`original-${index}`}
+          >
+            <div
+              style={backgroundImageStyle}
+              className="card relative"
+              draggable
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+            >
               {type === "Resources" && (
                 <MdPlayCircleOutline className="absolute top-2 right-2 text-[#483d78] text-3xl" />
               )}
               <Image
                 className="img"
                 src={card.image}
+                alt={card.title}
+                width={IMAGE_WIDTH}
+                height={IMAGE_HEIGHT}
+                draggable="false"
+              />
+            </div>
+            <span className="font-montserrat mt-4 font-medium hover:text-[#483d78] hover:font-bold text-16">
+              {card.title}
+            </span>
+          </li>
+        ))}
+        {supporItem.map((card, index) => (
+          <li
+            className="ml-4 flex flex-col items-center justify-center"
+            key={`clone-start-${index}`}
+          >
+            <div
+              style={backgroundImageStyle}
+              className="card relative"
+              draggable
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+            >
+              {type === "Resources" && (
+                <MdPlayCircleOutline className="absolute top-2 right-2 text-[#483d78] text-3xl" />
+              )}
+              <Image
+                className="img"
+                src={card.image.src}
                 alt={card.title}
                 width={IMAGE_WIDTH}
                 height={IMAGE_HEIGHT}

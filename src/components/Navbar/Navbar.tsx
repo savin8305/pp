@@ -61,7 +61,7 @@ const Navbar: React.FC = memo(() => {
 
   return (
     <div
-      className={`navbar fixed top-2 left-2 right-2 z-50 mx-auto max-w-screen-2xl backdrop-blur-[4px] ${
+      className={`navbar fixed top-0 left-2 right-2 z-50 mx-auto max-w-screen-2xl backdrop-blur-[4px] ${
         hoveredItem ? "rounded-t-lg" : "rounded-lg"
       }`}
     >
