@@ -19,9 +19,13 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
   setHeading,
   setIsVisible,
 }) => {
-  const [hoveredCategory, setHoveredCategory] = useState<string>(SidebarLinks[0].name);
+  const [hoveredCategory, setHoveredCategory] = useState<string>(
+    SidebarLinks[0].name
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(null);
+  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(
+    null
+  );
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const filteredMachines = Machines.filter((machine) =>
@@ -37,7 +41,8 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
 
   const handlePrev = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + filteredMachines.length) % filteredMachines.length
+      (prevIndex) =>
+        (prevIndex - 1 + filteredMachines.length) % filteredMachines.length
     );
   };
 
@@ -81,13 +86,6 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
     >
       <div className="w-full flex flex-col md:flex-row rounded-lg overflow-hidden">
         <div className="flex h-full justify-center items-center w-full md:w-3/4 relative">
-          <Image
-            src={me}
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            className="w-full h-full"
-          />
           {filteredMachines.length > 6 && (
             <button
               onClick={handlePrev}
@@ -155,7 +153,9 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
                         src={machine.image}
                         alt={machine.name}
                         className={`object-scale-down relative z-10 transition-transform duration-300 ${
-                          hoveredImageIndex === index ? "transform scale-110" : ""
+                          hoveredImageIndex === index
+                            ? "transform scale-110"
+                            : ""
                         } h-auto w-full`}
                         width={200}
                         height={150}
@@ -184,7 +184,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
             </button>
           )}
         </div>
-        <div className="w-full md:w-1/4 pl-4 space-y-2 border-l border-gray-300">
+        <div className="w-full mt-6 md:w-1/4 pl-4 space-y-2 border-l border-gray-300">
           {SidebarLinks.map((link) => (
             <div
               key={link.name}

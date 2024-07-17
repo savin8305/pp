@@ -103,17 +103,18 @@ const Hero: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row px-4 sm:px-10 w-full">
-        <div className="w-full md:w-2/5 flex flex-col mb-4 md:mb-2">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-poppins font-extralight">
+        <div className="w-full md:w-2/5 mx-2 flex flex-col mb-4 md:mb-2">
+          <h4 className="text-2xl mx-2 sm:text-3xl md:text-2xl lg:text-4xl font-poppins font-thin">
             FOOD PACKING MACHINES
-          </h2>
+          </h4>
+
           <Image
             src={Manufacturing}
             alt="Manufacturing Image"
             layout="responsive"
             height={10}
-            width={150}
-            className="w-full h-auto object-cover rounded-2xl"
+            width={1}
+            className="w-[20%] pr-6 h-auto object-cover rounded-2xl"
           />
           <nav className="flex flex-wrap mt-0 space-x-2 sm:space-x-4 px-1 sm:px-2">
             <NavLink
@@ -167,7 +168,7 @@ const Hero: React.FC = () => {
           </nav>
         </div>
         <div className="w-full px-6 md:w-3/5">
-         <Carousel/>
+          <Carousel />
         </div>
       </div>
     </div>

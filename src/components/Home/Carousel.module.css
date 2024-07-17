@@ -1,81 +1,76 @@
-.sliderContainer {
-  width: 100%;
-  overflow: hidden;
-  padding: 0;
-  border-radius: 10px;
-  margin-top:-0.5rem;
-}
-.slider {
+.carousel {
   position: relative;
-  height:320px;
-}
-.sliderItem {
-  position: absolute;
-  display: flex;
-  justify-items: center;
-  align-items: center;
+  top: 0;
   width: 100%;
-  height: 7rem;
-  transform: scale(0.8);
-  transition: transform 0.8s ease, opacity 0.8s ease;
-  background-color: #ffffff;
-  border-radius: 10px;
-  opacity: 0;
+  height: 150px;
+  overflow: hidden;
 }
-.sliderItem.active {
-  transform: scale(1);
+
+.card {
+  top: 0;
+  position: absolute;
+  left: 50%;
+  width: 60%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  background: rgba(37, 37, 37, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  overflow: hidden;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.8s ease-in-out;
+  z-index: 1;
+}
+
+.card.next {
+  bottom: 20px;
+  transform: translateX(-50%) scale(0.7);
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.card.active {
+  bottom: 30px;
+  transform: translateX(-50%) scale(1);
   opacity: 1;
   z-index: 2;
 }
-.sliderItem img {
-  border-radius: 10px;
-  margin-bottom: 0px;
-  width: 100%;
-  height: 6rem;
-  margin-right: 6rem;
-  margin-left: 0.5rem;
-}
-.imageContainer {
+
+.image {
   width: 40%;
-  display: flex;
+  height: 100%;
+  object-fit: cover;
 }
 
-.textContent {
+.content {
+  padding: 20px;
   width: 60%;
+  color: white;
   text-align: left;
-  margin-top: -1rem;
-  margin-left: -5rem;
 }
-.navigation {
+
+.indicators {
+  position: absolute;
+  top:130px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  margin-top:-12rem;
+  gap: 5px;
 }
 
-.navButton {
-  width: 15px;
-  height: 15px;
-  margin: 10px 5px;
-  background: #fff;
-  border: none;
+.indicators span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: gray;
   border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.navButton.active,
-.navButton:hover {
-  background: #007bff;
-}
-
-.textCenter {
-  text-align: center;
-}
-
-.fontMontserrat {
-  font-family: 'Montserrat', sans-serif;
-}
-
-.fontThin {
-  font-weight: 300;
+.indicators span.active {
+  height: 10px;
+  border-radius:2px;
+  background: #ff0000;
+  width:30px;
 }

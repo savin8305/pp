@@ -19,7 +19,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        "montserrat": ["Montserrat", "sans-serif"],
+        "montserrat": ["Montserrat", "Poppins"],
+         poppins: ['Poppins', 'sans-serif'],
       },
       fontSize: {
         16: "16px",
