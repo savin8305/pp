@@ -19,6 +19,7 @@ import { FaLeaf, FaProjectDiagram, FaLightbulb, FaRecycle } from 'react-icons/fa
     PCM110WithPLC,
     paperStrawMachine,
     BookServiceImage,
+    paperLunchBoxMachine
   } from "../../../public/assets";
   import { StaticImageData } from 'next/image';
 interface Images {
@@ -29,6 +30,7 @@ interface Images {
   paperFlexoMachineImage: StaticImageData;
   fullyAutomaticBagMachineImage: StaticImageData;
   paperStrawMachine: StaticImageData;
+  paperLunchBoxMachine:StaticImageData;
 }
 
 export const images: Images = {
@@ -39,6 +41,7 @@ paperPlateMachineImage:paperPlateMachineImage ,
 paperFlexoMachineImage:paperFlexoMachineImage,
 fullyAutomaticBagMachineImage:fullyAutomaticBagMachineImage,
 paperStrawMachine:paperStrawMachine,
+paperLunchBoxMachine:paperLunchBoxMachine
 };
 
   export const items = [
@@ -200,13 +203,46 @@ paperStrawMachine:paperStrawMachine,
       icon: paperlid,
     },
     {
-      name: "Paper Bag Machine",
+      name: "Paper Flexo Machine",
+      image: "paperFlexoMachineImage",
+      category: "Paper Flexo Machine,All Products",
+      icon: paperlid,
+    },
+    {
+      name: "Paper Bag Machine1",
       image: "paperBagMachineImage",
       category: "Paper Bag Machine,All Products",
       icon: paperbag1,
     },
     {
+      name: "Paper Flexo Machine2",
+      image: "paperFlexoMachineImage",
+      category: "Paper Flexo Machine,All Products",
+      icon: paperlid,
+    },
+    {
+      name: "Paper Flexo Machine3",
+      image: "paperFlexoMachineImage",
+      category: "Paper Flexo Machine,All Products",
+      icon: paperlid,
+    },
+    {
       name: "Paper Bag Machine new",
+      image: "fullyAutomaticBagMachineImage",
+      category: "Paper Bag Machine,All Products",
+      icon: paperbag1,
+    }, {
+      name: "Paper Bag Machine1",
+      image: "fullyAutomaticBagMachineImage",
+      category: "Paper Bag Machine,All Products",
+      icon: paperbag1,
+    }, {
+      name: "Paper Bag Machine new2",
+      image: "fullyAutomaticBagMachineImage",
+      category: "Paper Bag Machine,All Products",
+      icon: paperbag1,
+    }, {
+      name: "Paper Bag Machine new3",
       image: "fullyAutomaticBagMachineImage",
       category: "Paper Bag Machine,All Products",
       icon: paperbag1,
@@ -216,6 +252,55 @@ paperStrawMachine:paperStrawMachine,
       name: "Paper Straw Machine",
       image: "paperStrawMachine",
       category: "Paper Straw Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Straw Machine1",
+      image: "paperStrawMachine",
+      category: "Paper Straw Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Straw Machine2",
+      image: "paperStrawMachine",
+      category: "Paper Straw Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Straw Machine3",
+      image: "paperStrawMachine",
+      category: "Paper Straw Machine,All Products",
+      icon: paperstraw,
+    },
+    
+    {
+      name: "Paper Straw Machine4",
+      image: "paperStrawMachine",
+      category: "Paper Straw Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Lunch Box Machine",
+      image: "paperLunchBoxMachine",
+      category: "Paper Lunch Box Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Lunch Box Machine1",
+      image: "paperLunchBoxMachine",
+      category: "Paper Lunch Box Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Lunch Box Machine2",
+      image: "paperLunchBoxMachine",
+      category: "Paper Lunch Box Machine,All Products",
+      icon: paperstraw,
+    },
+    {
+      name: "Paper Lunch Box Machine3",
+      image: "paperLunchBoxMachine",
+      category: "Paper Lunch Box Machine,All Products",
       icon: paperstraw,
     },
   ];
@@ -281,61 +366,61 @@ paperStrawMachine:paperStrawMachine,
       link: "/Paper Handle Cup Machine",
       icon: paperbag1,
     },
-    // {
-    //   name: "Die Cutting Machine",
-    //   link: "/Die Cutting Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Insulated Cup Machine",
-    //   link: "/Insulated Cup Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Sleeve Making Machine",
-    //   link: "/Sleeve Making Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Paper Cutlery Machine",
-    //   link: "/Paper Cutlery Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Plastic Lid Machine",
-    //   link: "/Plastic Lid Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Paper Bucket Machine",
-    //   link: "/Paper Bucket Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Paper Lid Machine",
-    //   link: "/Paper Lid Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Octagonal Paper Box Forming Machine",
-    //   link: "/Octagonal Paper Box Forming Machine",
-    //   icon:paperbag1,
-    // },
-    // {
-    //   name: "Rectangular Flat Bottom Bowl Machine",
-    //   link: "/Rectangular Flat Bottom Bowl Machine",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Rectangular Flat Bottom Bowl Machine (Two Compartment)",
-    //   link: "/Rectangular Flat Bottom Bowl Machine (Two Compartment)",
-    //   icon: paperbag1,
-    // },
-    // {
-    //   name: "Carton Erecting Machine",
-    //   link: "/Carton Erecting Machine",
-    //   icon: paperbag1,
-    // },
+    {
+      name: "Die Cutting Machine",
+      link: "/Die Cutting Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Insulated Cup Machine",
+      link: "/Insulated Cup Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Sleeve Making Machine",
+      link: "/Sleeve Making Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Paper Cutlery Machine",
+      link: "/Paper Cutlery Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Plastic Lid Machine",
+      link: "/Plastic Lid Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Paper Bucket Machine",
+      link: "/Paper Bucket Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Paper Lid Machine",
+      link: "/Paper Lid Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Octagonal Paper Box Forming Machine",
+      link: "/Octagonal Paper Box Forming Machine",
+      icon:paperbag1,
+    },
+    {
+      name: "Rectangular Flat Bottom Bowl Machine",
+      link: "/Rectangular Flat Bottom Bowl Machine",
+      icon: paperbag1,
+    },
+    {
+      name: "Rectangular Flat Bottom Bowl Machine (Two Compartment)",
+      link: "/Rectangular Flat Bottom Bowl Machine (Two Compartment)",
+      icon: paperbag1,
+    },
+    {
+      name: "Carton Erecting Machine",
+      link: "/Carton Erecting Machine",
+      icon: paperbag1,
+    },
   ];
 
   // support itemm

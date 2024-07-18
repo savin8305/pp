@@ -91,15 +91,13 @@ const Hero: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="absolute bottom-0 left-8 sm:bottom-10 sm:left-10 md:bottom-20 md:left-20">
-          <div className="btn-common px-2 sm:px-4 py-1">
-            <span>Get a Quote</span>
-            <button className="btn-icon">
-              <span>
-                <MdKeyboardArrowRight />
-              </span>
-            </button>
-          </div>
+        <div className="absolute bg-[#f5f5f5] border-2 rounded-3xl px-4 p-0 flex items-center bottom-0 left-8 sm:bottom-10 sm:left-10 md:bottom-20 md:left-20">
+          <span className="mr-2">Get a Quote</span>
+          <button className="relative z-10 p-0 text-4xl h-10 w-10 border-2 rounded-full overflow-hidden bg-white text-black transition-all hover:text-white hover:bg-black">
+            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 group-hover:translate-x-full group-hover:w-0 group-hover:bg-black group-hover:text-white">
+              <MdKeyboardArrowRight />
+            </span>
+          </button>
         </div>
       </div>
       <div className="flex flex-col md:flex-row px-4 sm:px-10 w-full">
@@ -167,7 +165,7 @@ const Hero: React.FC = () => {
             />
           </nav>
         </div>
-        <div className="w-full px-6 md:w-3/5">
+        <div className="w-full px-2 md:w-3/5">
           <Carousel />
         </div>
       </div>

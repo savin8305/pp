@@ -23,6 +23,7 @@ import paperBowlMachineImage3 from "./nav_machine/PaperBowlMachine3.png"
 import paperFlexoMachineImage from "./nav_machine/FlexoPrintingMachine.png"
 import paperStrawMachine from "./nav_machine/PaperStrawMachine.png"
 import PCM110WithPLC from "./nav_machine/PCM110WithPLC.png"
+import paperLunchBoxMachine from "./nav_machine/PaperLunchBoxMachine.png"
 //nav_support
 import BookServiceImage from "./nav_support/BookService.png"
 import BgMapImage from "./nav_support/BgMapImage.png"
@@ -50,5 +51,6 @@ export {
   paperFlexoMachineImage,
   paperStrawMachine,
   BookServiceImage,
+  paperLunchBoxMachine,
   BgMapImage
 };

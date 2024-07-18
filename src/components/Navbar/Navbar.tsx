@@ -104,11 +104,11 @@ const Navbar: React.FC = memo(() => {
             setAccountOpen={setAccountOpen}
           />
           <SearchBarLayout
-              setIsFlagOpen={setIsFlagOpen}
-              openSearch={openSearch}
-              setOpenSearch={setOpenSearch}
-              setProfileOpen={setProfileOpen}
-              setAccountOpen={setAccountOpen}
+            setIsFlagOpen={setIsFlagOpen}
+            openSearch={openSearch}
+            setOpenSearch={setOpenSearch}
+            setProfileOpen={setProfileOpen}
+            setAccountOpen={setAccountOpen}
           />
           <ProfileLayout
             profileOpen={profileOpen}
@@ -148,8 +148,8 @@ const Navbar: React.FC = memo(() => {
               className={`z-30 ${hoveredItem ? "h-6" : "h-6"} w-auto`}
               src={Logo}
               alt="Logo"
-              width={24}
-              height={24}
+              width={100}
+              height={100}
             />
           </Link>
           <div className="flex items-center">

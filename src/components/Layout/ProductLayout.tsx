@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Machines, SidebarLinks, images } from "../Constants";
-import me from "../../../public/assets/BgForAbout.png";
 import Image, { StaticImageData } from "next/image";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import {
+  MdKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+} from "react-icons/md";
 
 interface ProductLayoutProps {
   setHoveredItem: (item: string | null) => void;
@@ -26,6 +30,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
   const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(
     null
   );
+  const [sidebarIndex, setSidebarIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const filteredMachines = Machines.filter((machine) =>
@@ -43,6 +48,18 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
     setCurrentIndex(
       (prevIndex) =>
         (prevIndex - 1 + filteredMachines.length) % filteredMachines.length
+    );
+  };
+
+  const handleSidebarNext = () => {
+    setSidebarIndex((prevIndex) =>
+      prevIndex + 6 < SidebarLinks.length ? prevIndex + 6 : prevIndex
+    );
+  };
+
+  const handleSidebarPrev = () => {
+    setSidebarIndex((prevIndex) =>
+      prevIndex - 6 >= 0 ? prevIndex - 6 : prevIndex
     );
   };
 
@@ -82,7 +99,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
   return (
     <div
       ref={containerRef}
-      className="w-full z-30 md:h-full bg-white p-2 border-b-2 rounded-xl flex flex-col justify-center items-center font-medium"
+      className="w-full z-30 md:h-full bg-white p-6 border-b-2 rounded-xl flex flex-col justify-center items-center font-medium"
     >
       <div className="w-full flex flex-col md:flex-row rounded-lg overflow-hidden">
         <div className="flex h-full justify-center items-center w-full md:w-3/4 relative">
@@ -95,7 +112,7 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
               <MdKeyboardArrowLeft />
             </button>
           )}
-          <div className="flex flex-wrap justify-center overflow-hidden w-full">
+          <div className="flex flex-wrap pb-8 justify-center overflow-hidden w-full">
             {filteredMachines.length <= 6
               ? filteredMachines.map((machine, index) => (
                   <div
@@ -114,19 +131,19 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
                     <Image
                       src={machine.image}
                       alt={machine.name}
-                      className={`object-contain rounded-lg relative z-10 h-36 w-full transition-transform duration-300 ${
+                      className={`object-contain rounded-lg relative z-10 h-32 w-full transition-transform duration-300 ${
                         hoveredImageIndex === index ? "transform scale-110" : ""
                       }`}
                       width={200}
                       height={150}
                     />
-                    <h3 className="text-lg text-black font-bold relative z-20">
+                    <h3 className="text-lg text-black mt-2 font-bold relative z-20">
                       {machine.name}
                     </h3>
-                    <div className="flex justify-center space-x-2">
+                    <div className="flex justify-center mt-2 space-x-2">
                       <a
                         href={`${machine.name}`}
-                        className="primary-button relative z-20"
+                        className="relative text-white bg-red-500 rounded-3xl px-8 p-1 z-20"
                       >
                         Book Now
                       </a>
@@ -184,71 +201,58 @@ const ProductLayout: React.FC<ProductLayoutProps> = ({
             </button>
           )}
         </div>
-        <div className="w-full mt-6 md:w-1/4 pl-4 space-y-2 border-l border-gray-300">
-          {SidebarLinks.map((link) => (
-            <div
-              key={link.name}
-              onMouseEnter={() => {
-                setHoveredCategory(link.name);
-                setCurrentIndex(0);
-              }}
-              className={`flex items-center space-x-4 text-lg transition-colors duration-300 cursor-pointer ${
-                hoveredCategory === link.name
-                  ? "font-montserrat font-bold text-[#483d73]"
-                  : "font-montserrat text-[#483d73]"
-              }`}
+        <div className="w-full mt-2 md:w-1/4 pl-4 space-y-2 border-l border-gray-300 relative">
+          {sidebarIndex > 0 && (
+            <button
+              onClick={handleSidebarPrev}
+              className="absolute top-0 left-1/2 transform -translate-x-1/2 p-2 text-xl text-black transition-all hover:text-white hover:bg-black rounded-full bg-white"
             >
+              <MdKeyboardArrowUp />
+            </button>
+          )}
+          <div className="pt-6 space-y-4">
+            {SidebarLinks.slice(sidebarIndex, sidebarIndex + 8).map((link) => (
               <div
-                className={`flex items-center bg-fixed object-contain bg-no-repeat h-6 w-6 justify-center cursor-pointer ${
+                key={link.name}
+                onMouseEnter={() => {
+                  setHoveredCategory(link.name);
+                  setCurrentIndex(0);
+                }}
+                className={`flex items-center space-x-2 text-lg transition-colors duration-300 cursor-pointer ${
                   hoveredCategory === link.name
-                    ? "h-8 w-8 text-[#483d73] font-bold"
-                    : "text-black"
+                    ? "font-montserrat font-bold text-[#483d73]"
+                    : "font-montserrat text-[#483d73]"
                 }`}
               >
-                <Image
-                  className="rounded-full"
-                  src={link.icon}
-                  alt="machine icon"
-                  width={24}
-                  height={24}
-                />
-              </div>
-              <span
-                className={`transition duration-300 ${
-                  hoveredCategory === link.name ? "font-semibold" : ""
-                }`}
-              >
-                {link.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      {hoveredCategory && filteredMachines.length > 0 && (
-        <div className="flex justify-center w-full mt-4">
-          <div className="flex justify-center items-center space-x-2">
-            {filteredMachines.map((machine, index) => (
-              <div
-                key={index}
-                className={`flex items-center cursor-pointer transition-transform duration-300 ${
-                  index === (currentIndex + 1) % filteredMachines.length
-                    ? "h-8 w-8"
-                    : "h-4 w-4"
-                }`}
-                onClick={() => setCurrentIndex(index)}
-              >
-                <Image
-                  className="rounded-full bg-transparent"
-                  src={machine.icon}
-                  alt="machine icon"
-                  width={24}
-                  height={24}
-                />
+                <div
+                  className={`flex items-center bg-fixed object-contain bg-no-repeat h-6 w-6 justify-center cursor-pointer ${
+                    hoveredCategory === link.name
+                      ? "h-8 w-8 text-[#483d73] font-bold"
+                      : "text-black"
+                  }`}
+                >
+                  <MdKeyboardArrowRight />
+                </div>
+                <span
+                  className={`transition duration-300 ${
+                    hoveredCategory === link.name ? "font-semibold" : ""
+                  }`}
+                >
+                  {link.name}
+                </span>
               </div>
             ))}
           </div>
+          {sidebarIndex + 6 < SidebarLinks.length && (
+            <button
+              onClick={handleSidebarNext}
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 p-2 text-xl text-black transition-all hover:text-white hover:bg-black rounded-full bg-white"
+            >
+              <MdKeyboardArrowDown />
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

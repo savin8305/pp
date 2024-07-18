@@ -64,13 +64,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && formRef.current) {
       gsap.fromTo(
         formRef.current,
         { y: "-100%", opacity: 0 },
         { y: "0%", opacity: 1, duration: 0.4, ease: "power3.out" }
       );
-    } else {
+    } else if (formRef.current) {
       gsap.to(formRef.current, {
         y: "-100%",
         opacity: 0,
@@ -206,7 +206,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             onSubmit={handleSubmit}
           >
             <button
-              className="absolute h-8 w-8 right-2 top-16"
+              className="absolute h-8 w-8 right-2 top-4 bg-[#483d78] rounded-full text-white"
               type="button"
               onClick={onClose}
             >
@@ -218,6 +218,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             <div className="space-y-4">
               <div className="relative">
                 <input
+                  ref={nameInputRef}
                   type="text"
                   name="name"
                   placeholder=" "
@@ -240,6 +241,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
               <div className="relative">
                 <input
+                  ref={phoneInputRef}
                   type="text"
                   name="phone"
                   placeholder=" "
@@ -254,7 +256,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   value={formValues.phone}
                 />
                 <label className="absolute left-3 top-3 text-gray-500 pointer-events-none transition-all duration-200 ease-in-out bg-white px-1">
-                  Mobile No
+                  Phone
                 </label>
                 {errors.phone && (
                   <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
@@ -262,6 +264,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
               <div className="relative">
                 <input
+                  ref={emailInputRef}
                   type="email"
                   name="email"
                   placeholder=" "
@@ -276,7 +279,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   value={formValues.email}
                 />
                 <label className="absolute left-3 top-3 text-gray-500 pointer-events-none transition-all duration-200 ease-in-out bg-white px-1">
-                  E-Mail
+                  Email
                 </label>
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -284,34 +287,31 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
               <div className="relative">
                 <textarea
+                  ref={messageInputRef}
                   name="message"
                   placeholder=" "
                   required
-                  className={`w-full p-3 border ${
-                    errors.message ? "border-red-500" : "border-gray-300"
-                  } rounded-lg focus:outline-none`}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+                  rows={5}
                   onFocus={handleFocus}
-                  onBlur={handleValidation}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   value={formValues.message}
-                />
+                ></textarea>
                 <label className="absolute left-3 top-3 text-gray-500 pointer-events-none transition-all duration-200 ease-in-out bg-white px-1">
                   Message
                 </label>
-                {errors.message && (
-                  <p className="text-red-500 text-sm mt-1">{errors.message}</p>
-                )}
               </div>
             </div>
-            <button
-              type="submit"
-              className={`w-full mt-6 bg-[#483d78] text-white rounded-lg p-3 font-montserrat text-lg focus:outline-none ${
-                isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={isSubmitDisabled}
-            >
-              Submit
-            </button>
+            <div className="flex justify-center mt-6">
+              <button
+                type="submit"
+                className="bg-[#483d78] text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50"
+                disabled={isSubmitDisabled}
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       )}
