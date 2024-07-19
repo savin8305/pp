@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { links } from "../Constants/index";
 import { supporItem, DataBankItem } from "../Constants/index";
 import AboutLayout from "../Layout/AboutLayout";
 import ProductLayout from "../Layout/ProductLayout";
 import SupportLayout from "../Layout/SupportLayout";
-
+import { gsap } from "gsap";
 interface NavLinksProps {
   hoveredItem: string | null;
   setHoveredItem: (item: string | null) => void;
@@ -16,6 +16,7 @@ interface NavLinksProps {
   isVisible: boolean;
   setIsVisible: (visible: boolean) => void;
 }
+
 const NavLinks: React.FC<NavLinksProps> = ({
   hoveredItem,
   setHoveredItem,
@@ -31,6 +32,16 @@ const NavLinks: React.FC<NavLinksProps> = ({
     setHoveredItem(item);
     setHeading(item);
   };
+
+  useEffect(() => {
+    if (animateref.current) {
+      gsap.to(animateref.current, {
+        scale: hoveredItem ? 1 : 0.95,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    }
+  }, [hoveredItem]);
 
   return (
     <>
@@ -77,25 +88,31 @@ const NavLinks: React.FC<NavLinksProps> = ({
                     setIsVisible={setIsVisible}
                   />
                 )}
+                {link.name === "Application" && (
+                  <AboutLayout
+                    setHoveredItem={setHoveredItem}
+                    setHeading={setHeading}
+                    setIsVisible={setIsVisible}
+                  />
+                )}
+                {link.name === "Solutions" && (
+                  <ProductLayout
+                    setHoveredItem={setHoveredItem}
+                    setHeading={setHeading}
+                    setIsVisible={setIsVisible}
+                  />
+                )}
                 {link.name === "Support" && (
                   <SupportLayout
-                    hoveredItem={hoveredItem}
                     setHoveredItem={setHoveredItem}
-                    heading={heading}
-                    setHeading={setHeading}
-                    isVisible={isVisible}
-                    setIsVisible={setIsVisible}
-                    supporItem={supporItem} type={""}                  />
+                    supporItem={supporItem}
+                    type={""}
+                  />
                 )}
                 {link.name === "Resources" && (
                   <SupportLayout
                     type="Resources"
-                    hoveredItem={hoveredItem}
                     setHoveredItem={setHoveredItem}
-                    heading={heading}
-                    setHeading={setHeading}
-                    isVisible={isVisible}
-                    setIsVisible={setIsVisible}
                     supporItem={DataBankItem}
                   />
                 )}
@@ -121,9 +138,7 @@ const NavLinks: React.FC<NavLinksProps> = ({
               </div>
               {heading === link.name && (
                 <div className="pl-4 pb-2">
-                  {/* {link.comp === "AboutUs" && <AboutLayout />}
-                  {link.name === "Products" && <ProductLayout />}
-                  {link.name === "Application" && <AboutLayout />} */}
+                  {/* Add mobile-specific content if needed */}
                 </div>
               )}
             </div>

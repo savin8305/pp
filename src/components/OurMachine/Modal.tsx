@@ -2,33 +2,61 @@ import React from "react";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import Breadcrumb from "./Breadcrumb"; // Adjust the path according to your file structure
+import { motion } from "framer-motion";
+
+interface Item {
+  icon: JSX.Element;
+  text: string;
+}
 
 interface ModalProps {
   image: StaticImageData;
   title: string;
-  speed: number;
-  unit: string;
-  icon: StaticImageData;
+  firstname: string;
+  secondname: string;
+  description: string;
+  items: Item[];
   onClose: () => void;
 }
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+};
+
+const contentVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.3 } },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0, transition: { delay: 0.1, duration: 0.3 } },
+};
 
 const Modal: React.FC<ModalProps> = ({
   image,
   title,
-  speed,
-  unit,
-  icon,
+  firstname,
+  secondname,
+  description,
+  items,
   onClose,
 }) => {
   const breadcrumbItems = [
-    { label: "Home", href: "#" },
-    { label: "Products", href: "#" },
-    { label: title, current: true }
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    { label: title, current: true },
   ];
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="relative w-full max-w-4xl bg-white rounded-xl p-6 transform transition-transform duration-500 flip-in">
+      <motion.div
+        className="relative w-full max-w-[78rem] h-[90vh] bg-white rounded-xl p-6 transform transition-transform overflow-y-auto"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-2xl font-bold text-gray-700"
@@ -36,51 +64,46 @@ const Modal: React.FC<ModalProps> = ({
           &times;
         </button>
         <Breadcrumb items={breadcrumbItems} />
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/2 flex justify-center mb-4 md:mb-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <motion.div
+            className="flex flex-col items-center"
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <Image
               src={image}
               alt={title}
-              width={400}
+              width={600}
               height={400}
-              className="rounded-lg"
+              className="rounded-lg object-contain h-[400px]" // Fixed image height
             />
-          </div>
-          <div className="md:w-1/2 p-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <div className="h-20 w-16 flex items-center justify-center">
-                  <Image src={icon} alt="icon" height={50} width={50} />
-                </div>
-                <div className="ml-2">
-                  <div className="relative h-14 w-14 flex items-center justify-center border-2 border-[#483d78] rounded-full bg-white">
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <div className="text-base font-bold text-red-500">
-                        {speed}
-                      </div>
-                      <div className="text-txs mt-1 text-gray-500">{unit}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="flex space-x-4 mt-4">
+              <button className="px-4 py-2 border-2 border-blue-500 text-blue-500 rounded-lg">
+                View Machine
+              </button>
+              <button className="px-4 py-2 border-2 border-purple-500 text-purple-500 rounded-lg">
+                Get a Quote
+              </button>
             </div>
-            <div className="text-lg font-bold mb-2 text-red-600">{title}</div>
-            <p className="text-gray-700 mb-4">
-              Experience unparalleled efficiency with our {title}, a marvel of
-              engineering that integrates advanced mechanical, electronic,
-              pneumatic, and electrical technologies. This high-precision
-              machine is equipped with 13 servos that work in perfect sync via
-              PLC, enabling the production of up to 180 high-quality paper cups
-              per minute, equivalent to 3 cups per second. The machine features
-              a two-step curling process, which ensures the rim of each cup is
-              curled twice to provide extra rigidity and durability.
-              High-quality sealing is guaranteed through the use of ultrasonic
-              and hot air mechanisms, minimizing the risk of leakage, making it
-              ideal for both hot and cold beverages.
-            </p>
-          </div>
+          </motion.div>
+          <motion.div variants={contentVariants} initial="hidden" animate="visible">
+            <h1 className="text-3xl font-bold mb-4">
+              <span className="text-red-600">{firstname}</span>
+              <span className="text-[#483d78] ml-2">{secondname}</span>
+            </h1>
+            <p className="text-gray-700 mb-4">{description}</p>
+            <ul className="list-none grid grid-cols-2 gap-4 text-gray-700">
+              {items.map((item, index) => (
+                <li key={index} className="flex items-center space-x-2">
+                  {item.icon}
+                  <span>{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
