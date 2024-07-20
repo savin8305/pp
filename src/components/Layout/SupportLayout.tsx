@@ -143,7 +143,7 @@ const SupportLayout: React.FC<SupportLayoutProps> = ({
   return (
     <div
       ref={containerRef}
-      className="wrapper rounded-lg bg-white w-full mx-auto relative h-auto flex items-center justify-center p-14"
+      className="wrapper rounded-lg bg-white w-[98vw] mx-auto relative h-auto flex items-center justify-center p-14"
     >
       <button
         onClick={() => handleArrowClick("left")}

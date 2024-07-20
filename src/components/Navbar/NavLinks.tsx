@@ -76,9 +76,7 @@ const NavLinks: React.FC<NavLinksProps> = ({
               >
                 {link.comp === "AboutUs" && (
                   <AboutLayout
-                    setHoveredItem={setHoveredItem}
-                    setHeading={setHeading}
-                    setIsVisible={setIsVisible}
+                   
                   />
                 )}
                 {link.name === "Products" && (
@@ -90,9 +88,6 @@ const NavLinks: React.FC<NavLinksProps> = ({
                 )}
                 {link.name === "Application" && (
                   <AboutLayout
-                    setHoveredItem={setHoveredItem}
-                    setHeading={setHeading}
-                    setIsVisible={setIsVisible}
                   />
                 )}
                 {link.name === "Solutions" && (
